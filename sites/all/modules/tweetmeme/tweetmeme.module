@@ -1,0 +1,261 @@
+<?php
+
+/**
+ * @file
+ * Provides integration with the TweetMeme web service (http://tweetmeme.com).
+ */
+
+function tweetmeme_help($path, $arg) {
+  switch ($path) {
+    case 'admin/config/services/tweetmeme':
+    case 'admin/help#tweetmeme':
+      return '<p>'. t('<a href="@tweetmeme">TweetMeme</a> provides a way of tracking popular links on <a href="@twitter">Twitter</a>.', array('@tweetmeme' => 'http://tweetmeme.com', '@twitter' => 'http://twitter.com')) .'</p>';
+  }
+}
+
+/**
+ * Implements hook_init().
+ */
+function tweetmeme_init() {
+  // Add the CSS tweaks for TweetMeme.
+  drupal_add_css(drupal_get_path('module', 'tweetmeme') . '/tweetmeme.css', array(
+    'group' => CSS_SYSTEM,
+    'every_page' => TRUE,
+  ));
+}
+
+/**
+ * Implements hook_permission().
+ */
+function tweetmeme_permission() {
+  return array(
+    'administer tweetmeme' => array(
+      'title' => t('Administer TweetMeme'),
+      'description' => t('Configure how TweetMeme is used on the site.'),
+    ),
+    'access tweetmeme' => array(
+      'title' => t('Access TweetMeme'),
+      'description' => t('Users with this permission will be able to use and see TweetMeme.'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_menu().
+ */
+function tweetmeme_menu() {
+  $items['admin/config/services/tweetmeme'] = array(
+    'title' => 'TweetMeme',
+    'description' => 'Provides the configuration options for how TweetMeme operates on the site.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('tweetmeme_admin_settings'),
+    'access arguments' => array('administer tweetmeme'),
+    'file' => 'tweetmeme.admin.inc',
+  );
+  return $items;
+}
+
+/**
+ * Implements hook_block_info().
+ */
+function tweetmeme_block_info() {
+  $blocks['tweetmeme'] = array(
+    'info' => t('TweetMeme Widget'),
+    'cache' => DRUPAL_CACHE_GLOBAL,
+  );
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ */
+function tweetmeme_block_view($delta = '') {
+  $block = array();
+  switch ($delta) {
+    case 'tweetmeme':
+      $block['subject'] = t('TweetMeme');
+      $block['content'] = '<script type="text/javascript">';
+      $filter = variable_get('tweetmeme_filter',  'category');
+      $filter_option = variable_get('tweetmeme_filter_option', '1');
+      $media = variable_get('tweetmeme_media', 'all');
+      $number_of_items = variable_get('tweetmeme_number_of_items', '5');
+      $width = variable_get('tweetmeme_width', '300px');
+      $header = variable_get('tweetmeme_header', '#45B4DA');
+      $border_width = variable_get('tweetmeme_border_width', '1px');
+      $border_color = variable_get('tweetmeme_border_color', '#DCDCDC');
+      $block['content'] .= "tweetmeme_$filter = '$filter_option';tweetmeme_width = '$width';tweetmeme_header =  '$header';tweetmeme_border_width = '$border_width';tweetmeme_border_color = '$border_color'";
+      $block['content'] .= '</script><script type="text/javascript" src="http://tweetmeme.com/i/scripts/widget.js"></script>';
+      break;
+  }
+  return $block;
+}
+
+function tweetmeme_block_configure($delta = '') {
+  $form = array();
+  switch ($delta) {
+    case 'tweetmeme':
+      $form['filter'] = array(
+        '#type' => 'fieldset',
+        '#title' => t('Filter'),
+        '#collapsible' => TRUE,
+        '#collapsed' => FALSE,
+        '#description' => t('You can find out more about these options at the <a href="@url">TweetMeme Widget</a> site.', array('@url' => 'http://widget.tweetmeme.com/')),
+      );
+      $form['filter']['tweetmeme_filter'] = array(
+        '#type' => 'select',
+        '#title' => t('Filter by'),
+        '#default_value' => variable_get('tweetmeme_filter',  'category'),
+        '#options' => array(
+          'category' => t('Category'),
+          'channel' => t('Channel'),
+          'domain' => t('Domain'),
+        ),
+      );
+      $form['filter']['tweetmeme_filter_option'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Filter Option'),
+        '#default_value' => variable_get('tweetmeme_filter_option',  '1'),
+      );
+      $form['display'] = array(
+        '#type' => 'fieldset',
+        '#title' => t('Display Options'),
+        '#collapsible' => TRUE,
+        '#collapsed' => TRUE,
+      );
+      $form['display']['tweetmeme_media'] = array(
+        '#type' => 'select',
+        '#title' => t('Media'),
+        '#default_value' => variable_get('tweetmeme_media',  'all'),
+        '#options' => array(
+          'all' => t('All'),
+          'news' => t('News'),
+          'images' => t('Images'),
+          'videos' => t('Videos'),
+        ),
+      );
+      $form['display']['tweetmeme_number_of_items'] = array(
+        '#type' => 'select',
+        '#title' => t('Number of items'),
+        '#default_value' => variable_get('tweetmeme_number_of_items',  5),
+        '#options' => drupal_map_assoc(array(5, 10, 15, 20)),
+      );
+      $form['display']['tweetmeme_width'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Width'),
+        '#default_value' => variable_get('tweetmeme_width',  '300px'),
+      );
+      $form['display']['tweetmeme_header'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Header'),
+        '#default_value' => variable_get('tweetmeme_header',  '#45B4DA'),
+      );
+      $form['display']['tweetmeme_border_width'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Border Width'),
+        '#default_value' => variable_get('tweetmeme_border_width',  '1px'),
+      );
+      $form['display']['tweetmeme_border_color'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Border Color'),
+        '#default_value' => variable_get('tweetmeme_border_color',  '#DCDCDC'),
+      );
+      break;
+  }
+  return $form;
+}
+
+/**
+ * Implements hook_block_save().
+ */
+function tweetmeme_block_save($delta = '', $edit = array()) {
+  switch ($delta) {
+    case 'tweetmeme':
+      variable_set('tweetmeme_filter', $edit['tweetmeme_filter']);
+      variable_set('tweetmeme_filter_option', $edit['tweetmeme_filter_option']);
+      variable_set('tweetmeme_media', $edit['tweetmeme_media']);
+      variable_set('tweetmeme_number_of_items', $edit['tweetmeme_number_of_items']);
+      variable_set('tweetmeme_width', $edit['tweetmeme_width']);
+      variable_set('tweetmeme_header', $edit['tweetmeme_header']);
+      variable_set('tweetmeme_border_width', $edit['tweetmeme_border_width']);
+      variable_set('tweetmeme_border_color', $edit['tweetmeme_border_color']);
+      break;
+  }
+}
+
+/**
+ * Implements hook_node_view().
+ */
+function tweetmeme_node_view($node, $view_mode, $langcode) {
+  // Make sure we're on the right content type.
+  if (!in_array($node->type, variable_get('tweetmeme_types', array()), TRUE)) {
+    return;
+  }
+
+  // Make sure the user has access to use TweetMeme.
+  if (!user_access('access tweetmeme')) {
+    return;
+  }
+
+  // Retrieve the location where we should show it, the style and the URL of the button.
+  $location = variable_get('tweetmeme_location', array());
+
+  $style = variable_get('tweetmeme_style', 'normal');
+  $url = url('node/' . $node->nid, array('absolute' => TRUE));
+
+  // Check in the teaser view.
+  if ($view_mode == 'teaser' && !empty($location['teasers'])) {
+    $node->content['tweetmeme'] = array(
+      '#theme' => 'tweetmeme_button',
+      '#url' => $url,
+      '#style' => $style,
+      '#weight' => variable_get('tweetmeme_weight_teaser', -10),
+    );
+  }
+  // Check in the full view.
+  else if($view_mode == 'full' && !empty($location['content'])) {
+    $node->content['tweetmeme'] = array(
+      '#theme' => 'tweetmeme_button',
+      '#url' => $url,
+      '#style' => $style,
+      '#weight' => variable_get('tweetmeme_weight', -10),
+    );
+  }
+}
+
+/**
+ * Implementation of hook_theme().
+ */
+function tweetmeme_theme($existing, $type, $theme, $path) {
+  return array(
+    'tweetmeme_button' => array(
+      'variables' => array(
+        'url' => NULL,
+        'style' => NULL,
+      ),
+    ),
+  );
+}
+
+/**
+ * Displays the TweetMeme button
+ */
+function theme_tweetmeme_button($variables = array()) {
+  $url = isset($variables['url']) ? $variables['url'] : '';
+  $style = isset($variables['style']) ? $variables['style'] : 'normal';
+
+  $output = '<div class="tweetmeme tweetmeme-button"><script type="text/javascript">';
+  if (!empty($url)) {
+    $output .= "tweetmeme_url = '$url';\n";
+  }
+  if (!empty($style) && $style != 'normal') {
+    $output .= "tweetmeme_style = '$style';\n";
+  }
+  if ($source = variable_get('tweetmeme_source', '')) {
+    $output .= "tweetmeme_source = '$source';\n";
+  }
+  if ($shortener = variable_get('tweetmeme_urlShortener', '')) {
+    $output .= "tweetmeme_service = '$shortener';\n";
+  }
+  $output .= '</script><script type="text/javascript" src="http://tweetmeme.com/i/scripts/button.js"></script></div>';
+  return $output;
+}

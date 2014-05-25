@@ -1,0 +1,20 @@
+; $Id: multistep.info,v 1.2.2.1 2011/01/07 20:25:22 vkareh Exp $
+name = Multistep
+description = Adds multistep functionality to content types.
+package = Fields
+dependencies[] = field
+core = 7.x
+files[] = multistep.module
+files[] = multistep.install
+files[] = multistep.admin.inc
+;files[] = multistep.rules.inc
+;files[] = multistep.theme.inc
+;files[] = multistep.views.inc
+configure = admin/config/content/multistep
+
+; Information added by drupal.org packaging script on 2011-01-08
+version = "7.x-1.x-dev"
+core = "7.x"
+project = "multistep"
+datestamp = "1294446138"
+

@@ -1,0 +1,28 @@
+<?php
+// $Id: location_addanother.install,v 1.3 2011/01/14 03:18:38 bdragon Exp $
+
+/**
+ * @file
+ * Installation routines for location_addanother.
+ */
+
+/**
+ * Implementation of hook_install().
+ */
+function location_addanother_install() {
+  // Change weight so we execute after location.
+  db_update('system')
+    ->fields(array('weight' => 1,))
+    ->condition('name', 'location_addanother')
+    ->execute();
+}
+
+/**
+ * Implementation of hook_uninstall().
+ */
+function location_addanother_uninstall() {
+  $result = db_query("SELECT name FROM {variable} WHERE name LIKE 'location_addanother_%'");
+  foreach ($result as $row) {
+    variable_del($row->name);
+  }
+}

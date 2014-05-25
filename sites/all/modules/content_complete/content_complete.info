@@ -1,0 +1,30 @@
+; $Id: content_complete.info,v 1.1.4.4 2010/10/13 14:06:59 pvhee Exp $
+name = Content Complete
+description = Configure CCK fields to be tagged as required to be complete. Display the percent of completion to the user via a block.
+core = 7.x
+dependencies[] = field
+
+files[] = content_complete.module
+files[] = content_complete.install
+files[] = content_complete.admin.inc
+files[] = theme/theme.inc
+
+; Views
+files[] = views/content_complete.views.inc
+files[] = views/handlers/content_complete_views_handler_field_completeness.inc
+files[] = views/handlers/content_complete_views_handler_field_data.inc
+files[] = views/handlers/content_complete_views_handler_filter_complete_nodes.inc
+files[] = views/handlers/content_complete_views_handler_filter_content_type.inc
+files[] = views/plugins/content_complete_style_plugin.inc
+
+; Rules
+files[] = content_complete.rules.inc
+
+; Tests
+files[] = tests/content_complete.test
+; Information added by drupal.org packaging script on 2010-10-14
+version = "7.x-1.x-dev"
+core = "7.x"
+project = "content_complete"
+datestamp = "1287014792"
+

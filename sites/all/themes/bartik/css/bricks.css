@@ -1,0 +1,48 @@
+@font-face {font-family:"Handwriting"; src: url( /reddingbrothers/xndrupal/sites/all/libraries/dakota.ttf );}
+
+#site-name {font-weight:bold; font-size:230px; text-transform:uppercase; font-family:Futura; text-transform:none; font-family:"Handwriting - Dakota", "Handwriting", "Arial", sans-serif; font-family: Futura, Arial, sans-serif;}
+
+.not-front #site-name {font-size:72px;}
+.front #site-name {font-size:72px;}
+
+// #header {background-image:url(http://www.eikongraphia.com/images/universe/Epic_image_of_The_World_S.jpg);}
+// #header {background:url(http://www.worldinterestingfacts.com/wp-content/uploads/2010/03/most-beautiful-island-in-the-world-Kauai-Hawaii.jpg) bottom center;}
+#header {background:url(http://eminenthuman.com/sites/all/themes/bartik/images/Conquer_the_World_by_Dawn_200.jpg) bottom center;}
+// #header {background:url(http://eminenthuman.com/sites/all/themes/bartik/images/building-in-a-vast-expanse-of-plain_1280x200b.jpg) bottom center;}
+
+.mr-image-text-overlay .mr-element {position:relative; height:325px; overflow:hidden;}
+.mr-image-text-overlay .mr-title {position:absolute; top:0px; left:0px; /* background:#333333; */ color:#FFFFFF; padding:10px; font-size:48px;}
+.mr-image-text-overlay .mr-title a {color:#FFFFFF; text-decoration:none;}
+
+.mr-image-text-overlay-narrow .mr-element {position:relative; height:325px; overflow:hidden; font-size:24px;}
+.mr-image-text-overlay-narrow .mr-title {position:absolute; color:#FFFFFF; bottom:20px; left:0px; padding:10px;}
+.mr-image-text-overlay-narrow .mr-title a {color:#FFFFFF; font-weight:bold;}
+
+.mr-image-text-overlay .mr-title.Black,
+.mr-image-text-overlay .mr-title.Black a, 
+.mr-image-text-overlay-narrow .mr-title.Black,
+.mr-image-text-overlay-narrow .mr-title.Black a {color:#000000;}
+
+.mr-image-text-overlay .mr-title.White,
+.mr-image-text-overlay .mr-title.White a,
+.mr-image-text-overlay-narrow .mr-title.White,
+.mr-image-text-overlay-narrow .mr-title.White a {color:#FFFFFF;}
+
+.node-teaser .group-header {padding-bottom:20px;}
+
+.node-teaser .group-left {width:200px;}
+.node-teaser .group-right {float:left;}
+.node-full.node-article img {float:left; padding-right:10px;}
+.sidebar .block {border:none !important;}
+
+.view-block-content-videos .views-row {margin-bottom: 10px;}
+.view-block-content-videos .views-field-title {text-align:center;}
+
+.node-article.node-teaser .group-right {width:70%;}
+
+
+table tr {background:none;}
+table tr td {vertical-align: top;}
+
+.float {float:left;}
+.float img {margin:0 10px 10px 0;}

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+  <html lang="en" dir="ltr" >
+
+<head>
+    <title>Fishing under ice - YouTube</title>
+
+    <link  rel="stylesheet" href="http://s.ytimg.com/yt/cssbin/www-embed-refresh-vflUy4_Ee.css">
+
+
+    <link rel="canonical" href="/watch?v=VIs00QjiJZQ">
+
+  
+</head>
+  <body id="" class="date-20120106 en_US ltr" dir="ltr">
+
+
+<div id="watch-longform-ad" class="hid">
+  <div id="watch-longform-text">
+Advertisement
+  </div>
+  <div id="watch-longform-ad-placeholder"><img src="//s.ytimg.com/yt/img/pixel-vfl3z5WfW.gif" height="60" width="300"></div>
+</div>
+
+
+  <div id="player" class="full-frame"></div>
+
+
+        
+    <script  src="//s.ytimg.com/yt/jsbin/www-embed_core_module-vflK56XRK.js"></script>
+
+
+  <script>
+    yt.setConfig({
+      'EMBED_BINARY_URL': '//s.ytimg.com/yt/jsbin/www-embed_core_module-vflK56XRK.js',
+      'ORIGIN': "*",
+      'IS_OPERA_MINI': false
+    });
+    yt.setMsg({
+      'FLASH_UPGRADE': '<div  class=\"yt-alert yt-alert-error yt-alert-player yt-rounded \"><img src=\"\/\/s.ytimg.com\/yt\/img\/pixel-vfl3z5WfW.gif\" class=\"icon master-sprite\" alt=\"Alert icon\"><div  class=\"yt-alert-content\">        You need to upgrade your Adobe Flash Player to watch this video. <br> <a href=\"http:\/\/get.adobe.com\/flashplayer\/\">Download it from Adobe.<\/a>\n<\/div><\/div>'
+    });
+      yt.setConfig({
+      'PLAYER_CONFIG': {"assets": {"html": "\/html5_player_template", "css": "http:\/\/s.ytimg.com\/yt\/cssbin\/www-player-vflNqr0jJ.css"}, "url": "http:\/\/s.ytimg.com\/yt\/swfbin\/watch_as3-vfl7SkMGe.swf", "min_version": "8.0.0", "args": {"el": "embedded", "fexp": "907048,916601,906918", "is_html5_mobile_device": false, "allow_ratings": 1, "allow_embed": 1, "sendtmp": "1", "hl": "en_US", "use_tablet_controls": "0", "eurl": "", "iurl": "http:\/\/i3.ytimg.com\/vi\/VIs00QjiJZQ\/hqdefault.jpg", "view_count": 974609, "title": "Fishing under ice", "avg_rating": 4.96833225178, "video_id": "VIs00QjiJZQ", "length_seconds": 225, "iurlmaxres": "http:\/\/i3.ytimg.com\/vi\/VIs00QjiJZQ\/maxresdefault.jpg", "enablejsapi": "0", "sk": "yaVzc21hTfJUwRveF5hRR-c8yowPr8M-C", "use_native_controls": false, "rel": "1", "playlist_module": "http:\/\/s.ytimg.com\/yt\/swfbin\/playlist_module-vflu8VObY.swf", "iurlsd": "http:\/\/i3.ytimg.com\/vi\/VIs00QjiJZQ\/sddefault.jpg"}, "url_v9as2": "http:\/\/s.ytimg.com\/yt\/swfbin\/cps-vflcX3NWx.swf", "params": {"allowscriptaccess": "always", "allowfullscreen": "true", "bgcolor": "#000000"}, "attrs": {"width": "100%", "id": "video-player", "height": "100%"}, "url_v8": "http:\/\/s.ytimg.com\/yt\/swfbin\/cps-vflcX3NWx.swf", "html5": false},
+    'EMBED_HTML_TEMPLATE': "\u003ciframe width=\"__width__\" height=\"__height__\" src=\"__url__\" frameborder=\"0\" allowfullscreen\u003e\u003c\/iframe\u003e",
+    'EMBED_HTML_URL': "http:\/\/www.youtube.com\/embed\/__videoid__"
+  });
+  yt.net.ajax.setToken('html5_ajax', "8_yp8HpkxC90yhsLma7U4LvXWbp8MEAxMzI1ODcxODQw");
+
+  yt.setMsg('HTML5_DEFAULT_FALLBACK', "Your browser does not currently recognize any of the video formats available.\u003cbr\u003e\u003ca href=\"\/html5\"\u003eClick here to visit our frequently asked questions about HTML5 video.\u003c\/a\u003e");
+  yt.setMsg('PLAYER_FALLBACK', "\u003cdiv  class=\"yt-alert yt-alert-error yt-alert-player yt-rounded \"\u003e\u003cimg s\u0072c=\"\/\/s.ytimg.com\/yt\/img\/pixel-vfl3z5WfW.gif\" class=\"icon master-sprite\" alt=\"Alert icon\"\u003e\u003cdiv  class=\"yt-alert-content\"\u003e        The Adobe Flash Player or an HTML5 supported browser is required for video playback. \u003cbr\u003e \u003ca href=\"http:\/\/get.adobe.com\/flashplayer\/\"\u003eGet the latest Flash Player\u003c\/a\u003e \u003cbr\u003e \u003ca href=\"\/html5\"\u003eLearn more about upgrading to an HTML5 browser\u003c\/a\u003e\n\u003c\/div\u003e\u003c\/div\u003e");
+  yt.setMsg('HTML5_QUALITY_SETTING', "quality");
+  yt.setMsg('HTML5_SPEED_SETTING', "speed");
+  yt.setMsg('HTML5_SPEED_NORMAL', "normal");
+  yt.setMsg('HTML5_VOLUME_SETTING', "volume");
+  yt.setMsg('HTML5_VOLUME_MUTED', "muted");
+  yt.setMsg('HTML5_VOLUME_MUTE', "mute");
+  yt.setMsg('HTML5_VOLUME_UNMUTE', "unmute");
+  yt.setMsg('HTML5_CONTROL_TOGGLE', "toggle");
+  yt.setMsg('HTML5_SUBS_TRANSCRIBED', "transcribed");
+
+
+      yt.embed.writeEmbed();
+  </script>
+
+
+
+</body>
+</html>

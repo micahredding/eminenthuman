@@ -1,0 +1,15 @@
+; $Id: custom_formatters.info,v 1.3 2010/01/04 06:11:50 deciphered Exp $
+name = Custom Formatters
+description = Allows users to easily define custom CCK Formatters.
+core = 7.x
+files[] = custom_formatters.module
+files[] = custom_formatters.admin.inc
+files[] = custom_formatters.install
+configure = admin/config/content/formatters
+
+; Information added by drupal.org packaging script on 2010-07-11
+version = "7.x-1.x-dev"
+core = "7.x"
+project = "custom_formatters"
+datestamp = "1278833866"
+

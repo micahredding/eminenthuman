@@ -1,0 +1,15 @@
+name = Tweet
+description = Builds links to post pages to Twitter and Twitter API sites.
+core = 7.x
+configure = admin/config/tweet
+
+files[] = tweet.admin.inc
+files[] = tweet.install
+files[] = tweet.module
+
+; Information added by drupal.org packaging script on 2011-05-19
+version = "7.x-4.3"
+core = "7.x"
+project = "tweet"
+datestamp = "1305839516"
+

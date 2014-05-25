@@ -1,0 +1,198 @@
+<?php
+// $Id: mobile_codes.module,v 1.2 2009/02/26 00:53:51 deciphered Exp $
+
+/**
+ * @file
+ * Mobile Codes core functions
+ *
+ * Mobile Codes core functions to be used by Mobile Codes filter and any future
+ * integration features.
+ */
+
+/**
+ * Include additional files
+ */
+module_load_include('filter.inc', 'mobile_codes');
+
+/**
+ * Implementation of hook_theme().
+ */
+function mobile_codes_theme() {
+  return array(
+    'mobilecode' => array(
+      'arguments' => array(
+        'data' => NULL,
+        'arguments' => array(),
+        'format' => NULL,
+      ),
+    ),
+  );
+}
+
+/**
+ * Mobile Codes settings form.
+ */
+function mobile_codes_settings($format) {
+  $form['mobile_codes_type_'. $format] = array(
+    '#type' => 'select',
+    '#title' => t('Mobile Code type'),
+    '#options' => array(
+      'dm' => t('Datamatrix'),
+      'qr' => t('QR Code'),
+    ),
+    '#default_value' => variable_get('mobile_codes_type_'. $format, 'dm'),
+    '#description' => t('Set the default Mobile Code type - <a href="http://en.wikipedia.org/wiki/Datamatrix">Datamatrix</a> or <a href="http://en.wikipedia.org/wiki/QR_Code">QR Code</a>.'),
+  );
+
+  $form['mobile_codes_data_'. $format] = array(
+    '#type' => 'select',
+    '#title' => t('Data type'),
+    '#options' => array(
+      'phone' => t('Phone Number'),
+      'text' => t('Text'),
+      'link' => t('URL'),
+    ),
+    '#default_value' => variable_get('mobile_codes_data_'. $format, 'link'),
+    '#description' => t('Set the default Mobile Code data type.'),
+  );
+
+  $form['mobile_codes_size_'. $format] = array(
+    '#type' => 'select',
+    '#title' => t('Mobile Code size'),
+    '#options' => array(
+      's' => t('Small'),
+      'm' => t('Medium'),
+      'l' => t('Large'),
+    ),
+    '#default_value' => variable_get('mobile_codes_size_'. $format, 'm'),
+    '#description' => t('Set the default Mobile Code size.'),
+  );
+
+  $form['mobile_codes_tinyurl_'. $format] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Convert URLs to TinyURLs'),
+    '#default_value' => variable_get('mobile_codes_tinyurl_'. $format, 0),
+    '#description' => t('Set the default Mobile Code TinyURL behavior<br />
+                        <strong>Note:</strong> URLs over 60 characters will always get converted to TinyURLs.'),
+  );
+
+  return $form;
+}
+
+/**
+ * Generate a mobile code
+ */
+function mobile_codes_generate($data, $arguments = array(), $format = '') {
+  if (!isset($arguments['data'])) {
+    $arguments['data'] = variable_get('mobile_codes_data_'. $format, 'link');
+  }
+
+  if (!isset($arguments['size'])) {
+    $arguments['size'] = variable_get('mobile_codes_size_'. $format, 'm');
+  }
+
+  if (!isset($arguments['type'])) {
+    $arguments['type'] = variable_get('mobile_codes_type_'. $format, 'dm');
+  }
+
+  $dir = '/mobile_codes/'. $arguments['type'] .'/'. $arguments['data'] .'/'.  $arguments['size'];
+
+  $name = '';
+  if (!empty($arguments['name'])) {
+    $name = '-' . $arguments['name'];
+  }
+  else {
+    $arguments['name'] = '';
+  }
+
+  $file = file_directory_path() . $dir .'/'. urlencode($data) . $name .'.png';
+  $image_path  = file_directory_path() . $dir .'/'. urlencode(urlencode($data)) . $name .'.png';
+
+  if (!file_exists(''. $file)) {
+    switch ($arguments['data']) {
+      case 'link': case 'text':
+        $mode = 'TEXT';
+        break;
+
+      case 'phone':
+        $mode = 'NUMBER';
+        break;
+
+      default:
+        $arguments['data'] = 'link';
+        $mode = 'TEXT';
+        break;
+    }
+
+    switch (drupal_strtolower($arguments['size'])) {
+      case 's': case 'sml': case 'small':
+        $arguments['size'] = array('dm' => '0.12', 'qr' => '2');
+        break;
+
+      case 'm': case 'med': case 'medium':
+      default:
+        $arguments['size'] = array('dm' => '0.18', 'qr' => '4');
+        break;
+
+      case 'l': case 'lrg': case 'large':
+        $arguments['size'] = array('dm' => '0.24', 'qr' => '6');
+        break;
+    }
+
+    switch ($arguments['type']) {
+      case 'dm':
+      default:
+        $text = array('data' => 'BARCODE', 'size' => 'X', 'margin_encoding' => '');
+        break;
+
+      case 'qr':
+        $text = array('data' => 'DATA', 'size' => 'MODULE_SIZE', 'margin_encoding' => '&MARGIN=2&ENCODING=BYTE');
+        break;
+    }
+
+    if (!isset($arguments['tinyurl'])) {
+      $arguments['tinyurl'] = variable_get('mobile_codes_tinyurl_'. $format, 0);
+    }
+
+    if ($arguments['data'] == 'link' && ($arguments['tinyurl'] == 1 || drupal_strlen($data) > 60)) {
+      $headers = array('Content-type' => 'application/x-www-form-urlencoded');
+      $tinyurl = drupal_http_request('http://tinyurl.com/api-create.php?url='. urlencode($data), $headers, 'POST', NULL);
+      if ($tinyurl->code == 200) {
+        $data = $tinyurl->data;
+      }
+    }
+
+    $url = 'http://mobilecodes.nokia.com/'. $arguments['type'] .'?'. $text['data'] .'='.
+      urlencode($data) .'&'. $text['size'] .'='. $arguments['size'][$arguments['type']]
+      .'&name='. $arguments['name'] . $text['margin_encoding'] .'&type='. $arguments['data']
+      .'&MODE='. $mode .'&a=create';
+
+    mobile_codes_directory_check($dir);
+    $image = drupal_http_request($url);
+    file_save_data($image->data, $file, FILE_EXISTS_REPLACE);
+  }
+
+  return theme('image', $image_path, $arguments['name'], $arguments['name'], array('class' => 'mobile_code'), FALSE);
+}
+
+/**
+ * Create directory if it does not exist.
+ */
+function mobile_codes_directory_check($directory) {
+  foreach (explode('/', $directory) as $dir) {
+    $dirs[] = $dir;
+    $dir = file_directory_path() .'/'. implode($dirs, '/');
+    if (!file_check_directory($dir, FILE_CREATE_DIRECTORY)) {
+      return FALSE;
+    }
+  }
+
+  return TRUE;
+}
+
+/**
+ * Theme function for displaying Mobile Codes
+ */
+function theme_mobilecode($data, $arguments = array(), $format = '') {
+  return mobile_codes_generate($data, $arguments, $format);
+}

@@ -1,0 +1,31 @@
+<?php
+// $Id: location_cck.install,v 1.2 2010/12/22 23:46:07 bdragon Exp $
+
+/**
+ * @file
+ *  Module installation/uninstallation hooks.
+ */
+
+/**
+ * Implementation of hook_install().
+ */
+function location_cck_install() {
+}
+
+/**
+ * Implementation of hook_uninstall().
+ */
+function location_cck_uninstall() {
+}
+
+/**
+ * Implementation of hook_enable().
+ */
+function location_cck_enable() {
+}
+
+/**
+ * Implementation of hook_disable().
+ */
+function location_cck_disable() {
+}

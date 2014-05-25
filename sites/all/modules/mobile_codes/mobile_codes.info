@@ -1,0 +1,13 @@
+; $Id: mobile_codes.info,v 1.4 2009/02/26 00:53:51 deciphered Exp $
+name = Mobile Codes
+description = Create <a href="http://en.wikipedia.org/wiki/Datamatrix">Datamatrix</a> or <a href="http://en.wikipedia.org/wiki/QR_Code">QR</a> codes via an input filter or a direct call in your template.
+core = 7.x
+files[] = mobile_codes.module
+files[] = mobile_codes.filter.inc
+
+; Information added by drupal.org packaging script on 2010-07-11
+version = "7.x-1.x-dev"
+core = "7.x"
+project = "mobile_codes"
+datestamp = "1278834904"
+
